@@ -27,4 +27,10 @@ public class Controller {
         System.out.println("New game clicked");
         //reset planszy
     }
+
+    @FXML
+    private void handleExit(ActionEvent event) {
+        System.out.println("Exit clicked");
+        System.exit(0);
+    }
 }
