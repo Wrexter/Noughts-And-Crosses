@@ -15,17 +15,43 @@ public class Controller {
     @FXML private Button btn8;
     @FXML private Button btn9;
 
+
+    private String currentPlayer = "O";
+    private Button[] buttons;
+
+    @FXML
+    private void initialize(){
+        buttons = new Button[]{btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9};
+        for(Button b: buttons){
+            b.setFocusTraversable(false);
+        }
+    }
+
     @FXML
     protected void handleCellClick(ActionEvent event) {
-        //Button clicked = (Button) event.getSource();
-        System.out.println("Cell clicked");
-        //logika ruchu
+        Button clicked = (Button) event.getSource();
+        System.out.println(clicked.getId() + " Cell clicked");
+
+        if (currentPlayer.equals("O")){
+            clicked.setText("O");
+            currentPlayer = "X";
+        }
+        else{
+            clicked.setText("X");
+            currentPlayer = "O";
+        }
+        clicked.setDisable(true);
+
     }
 
     @FXML
     private void handleNewGame(ActionEvent event) {
         System.out.println("New game clicked");
-        //reset planszy
+        for(Button b: buttons){
+            b.setText("");
+            b.setDisable(false);
+        }
+        currentPlayer = "O";
     }
 
     @FXML
