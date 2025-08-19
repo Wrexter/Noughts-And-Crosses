@@ -45,21 +45,13 @@ public class Controller {
 
         if (checkWin()) {
             System.out.println("Wygrywa: " + clicked.getText());
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Koniec gry");
-            alert.setHeaderText(null);
-            alert.setContentText("Wygrywa: " + clicked.getText());
-            alert.showAndWait();
+            showAlert("Wygrywa: " + clicked.getText());
             for (Button b : buttons) {
                 b.setDisable(true);
             }
         } else if (isBoardFull()) {
             System.out.println("Remis!");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Koniec gry");
-            alert.setHeaderText(null);
-            alert.setContentText("Remis!");
-            alert.showAndWait();
+            showAlert("Remis");
         }
 
     }
@@ -98,7 +90,7 @@ public class Controller {
             String t3 = buttons[pattern[2]].getText();
 
             if (!t1.isEmpty() && t1.equals(t2) && t2.equals(t3)) {
-                return true; // mamy zwycięzcę
+                return true;
             }
         }
         return false;
@@ -111,5 +103,13 @@ public class Controller {
             }
         }
         return true;
+    }
+
+    private void showAlert(String message){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Koniec gry");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
