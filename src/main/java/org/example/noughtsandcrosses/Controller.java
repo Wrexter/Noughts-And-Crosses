@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.RadioMenuItem;
 
 public class Controller {
     @FXML private Button btn1;
@@ -16,9 +18,22 @@ public class Controller {
     @FXML private Button btn8;
     @FXML private Button btn9;
 
+    @FXML private RadioMenuItem mnPVP;
+    @FXML private RadioMenuItem mnPVB;
 
     private String currentPlayer = "O";
     private Button[] buttons;
+    private String gameMode;
+
+    public void setGameMode(String mode) {
+        this.gameMode = mode;
+        if ("PVP".equals(mode)) {
+            mnPVP.setSelected(true);
+        } else {
+            mnPVB.setSelected(true);
+        }
+        System.out.println("Game mode set to " + this.gameMode);
+    }
 
     @FXML
     private void initialize(){
@@ -59,17 +74,38 @@ public class Controller {
     @FXML
     private void handleNewGame(ActionEvent event) {
         System.out.println("New game clicked");
+        clearBoard();
+    }
+
+    private void clearBoard(){
         for(Button b: buttons){
             b.setText("");
             b.setDisable(false);
         }
         currentPlayer = "O";
+        System.out.println("Board cleared");
     }
 
     @FXML
     private void handleExit(ActionEvent event) {
         System.out.println("Exit clicked");
         System.exit(0);
+    }
+
+    @FXML
+    private void handlePVP(ActionEvent event) {
+        RadioMenuItem clicked = (RadioMenuItem) event.getSource();
+        System.out.println("Checked " + clicked.getText());
+        setGameMode("PVP");
+        clearBoard();
+    }
+
+    @FXML
+    private void handlePVB(ActionEvent event) {
+        RadioMenuItem clicked = (RadioMenuItem) event.getSource();
+        System.out.println("Checked " + clicked.getText());
+        setGameMode("PVB");
+        clearBoard();
     }
 
     @FXML

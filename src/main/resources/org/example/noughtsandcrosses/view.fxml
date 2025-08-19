@@ -12,6 +12,16 @@
           <Menu mnemonicParsing="false" text="Game">
             <items>
               <MenuItem fx:id="mnNG" mnemonicParsing="false" onAction="#handleNewGame" text="New Game" />
+                  <Menu fx:id="mnGM" mnemonicParsing="false" text="Game mode">
+                     <items>
+                        <RadioMenuItem fx:id="mnPVP" mnemonicParsing="false" onAction="#handlePVP" text="Player vs Player">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="modeGroup" />
+                           </toggleGroup>
+                        </RadioMenuItem>
+                        <RadioMenuItem fx:id="mnPVB" mnemonicParsing="false" onAction="#handlePVB" text="Player vs Bot" toggleGroup="$modeGroup" />
+                     </items>
+                  </Menu>
                   <MenuItem fx:id="mnExit" mnemonicParsing="false" onAction="#handleExit" text="Exit" />
             </items>
           </Menu>

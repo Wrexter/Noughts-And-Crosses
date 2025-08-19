@@ -2,9 +2,12 @@ package org.example.noughtsandcrosses;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class Application extends javafx.application.Application {
     @Override
@@ -14,6 +17,25 @@ public class Application extends javafx.application.Application {
         stage.setTitle("Noughts and crosses");
         stage.setResizable(false);
         stage.setScene(scene);
+
+        Controller controller = fxmlLoader.getController();
+
+        Alert setGameMode = new Alert(Alert.AlertType.CONFIRMATION);
+        setGameMode.setTitle("Noughts and crosses");
+        setGameMode.setHeaderText("Pick a game mode");
+        setGameMode.setContentText("Would you like to play against player or bot?");
+
+        ButtonType pvp = new ButtonType("Player vs Player");
+        ButtonType pvb = new ButtonType("Player vs Bot");
+        setGameMode.getButtonTypes().setAll(pvp, pvb);
+
+        Optional<ButtonType> result = setGameMode.showAndWait();
+        if (result.isPresent() && result.get() == pvp) {
+            controller.setGameMode("PVP");
+        } else {
+            controller.setGameMode("PVB");
+        }
+
         stage.show();
 
     }
