@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.RadioMenuItem;
 
 public class Controller {
@@ -24,6 +23,17 @@ public class Controller {
     private String currentPlayer = "O";
     private Button[] buttons;
     private String gameMode;
+
+    private final int[][] winPatterns = {
+            {0, 1, 2},
+            {3, 4, 5},
+            {6, 7, 8},
+            {0, 3, 6},
+            {1, 4, 7},
+            {2, 5, 8},
+            {0, 4, 8},
+            {2, 4, 6}
+    };
 
     public void setGameMode(String mode) {
         this.gameMode = mode;
@@ -51,6 +61,9 @@ public class Controller {
         if (currentPlayer.equals("O")){
             clicked.setText("O");
             currentPlayer = "X";
+            if (gameMode.equals("PVB")){
+                botMove();
+            }
         }
         else{
             clicked.setText("X");
@@ -110,16 +123,6 @@ public class Controller {
 
     @FXML
     private boolean checkWin() {
-        int[][] winPatterns = {
-                {0, 1, 2},
-                {3, 4, 5},
-                {6, 7, 8},
-                {0, 3, 6},
-                {1, 4, 7},
-                {2, 5, 8},
-                {0, 4, 8},
-                {2, 4, 6}
-        };
         for (int[] pattern : winPatterns) {
             String t1 = buttons[pattern[0]].getText();
             String t2 = buttons[pattern[1]].getText();
@@ -147,5 +150,57 @@ public class Controller {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void botMove(){
+        if(!checkWin()){
+            for(int[] pattern: winPatterns){
+                int countX = 0;
+                int emptyIndex = -1;
+                int countO = 0;
+
+                for(int i = 0; i<3; i++){
+                    String value = buttons[pattern[i]].getText();
+                    if (value.equals("X")) countX++;
+                    else if (value.equals("O")) countO++;
+                    else if (value.isEmpty()) emptyIndex = pattern[i];
+                }
+
+                if (countX == 2 && emptyIndex != -1) {
+                    buttons[emptyIndex].setText("X");
+                    buttons[emptyIndex].setDisable(true);
+                    currentPlayer = "O";
+                    return;
+                }
+
+                else if (countO == 2 && emptyIndex != -1) {
+                    buttons[emptyIndex].setText("X");
+                    buttons[emptyIndex].setDisable(true);
+                    currentPlayer = "O";
+                    return;
+                }
+            }
+
+            if(btn5.getText().isEmpty()){
+                btn5.setText("X");
+                btn5.setDisable(true);
+                currentPlayer = "O";
+                return;
+            }
+
+            int[] corners = {0, 2, 6, 8};
+            for (int idx : corners) {
+                if (buttons[idx].getText().isEmpty()) {
+                    buttons[idx].setText("X");
+                    buttons[idx].setDisable(true);
+                    currentPlayer = "O";
+                    return;
+                }
+            }
+
+
+
+        }
+
     }
 }
