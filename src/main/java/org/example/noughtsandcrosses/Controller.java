@@ -6,6 +6,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioMenuItem;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class Controller {
     @FXML private Button btn1;
     @FXML private Button btn2;
@@ -181,6 +185,28 @@ public class Controller {
                 }
             }
 
+
+            if(btn5.getText().isEmpty()){
+                btn5.setText("X");
+                btn5.setDisable(true);
+                currentPlayer = "O";
+                return;
+            }
+
+            List<Integer> availableFields = new ArrayList<>();
+
+            for(int idx: new int[]{0,2,6,8}) if(buttons[idx].getText().isEmpty()) availableFields.add(idx);
+            for(int idx: new int[]{1,3,5,7}) if(buttons[idx].getText().isEmpty()) availableFields.add(idx);
+
+            if(!availableFields.isEmpty()) {
+                int randomIndex = new Random().nextInt(availableFields.size());
+                int chosenIndex = availableFields.get(randomIndex);
+                buttons[chosenIndex].setText("X");
+                buttons[chosenIndex].setDisable(true);
+                currentPlayer = "O";
+            }
+
+            /*
             if(btn5.getText().isEmpty()){
                 btn5.setText("X");
                 btn5.setDisable(true);
@@ -197,6 +223,17 @@ public class Controller {
                     return;
                 }
             }
+
+            int[] sides = {1, 3, 5, 7};
+            for (int idx : sides) {
+                if (buttons[idx].getText().isEmpty()) {
+                    buttons[idx].setText("X");
+                    buttons[idx].setDisable(true);
+                    currentPlayer = "O";
+                    return;
+                }
+            }
+             */
 
 
 
