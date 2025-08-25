@@ -49,7 +49,6 @@ public class Controller {
         } else {
             mnPVB.setSelected(true);
         }
-        System.out.println("Game mode set to " + this.gameMode);
     }
 
     @FXML
@@ -63,7 +62,6 @@ public class Controller {
     @FXML
     protected void handleCellClick(ActionEvent event) {
         Button clicked = (Button) event.getSource();
-        System.out.println(clicked.getId() + " Cell clicked");
 
         if (currentPlayer.equals("O")){
             clicked.setText("O");
@@ -79,13 +77,11 @@ public class Controller {
         clicked.setDisable(true);
 
         if (checkWin()) {
-            System.out.println('"' + clicked.getText() + '"' + " wins!");
             showAlert('"' + clicked.getText() + '"' + " wins!");
             for (Button b : buttons) {
                 b.setDisable(true);
             }
         } else if (isBoardFull()) {
-            System.out.println("Remis!");
             showAlert("Draw!");
         }
 
@@ -93,7 +89,6 @@ public class Controller {
 
     @FXML
     private void handleNewGame() {
-        System.out.println("New game clicked");
         clearBoard();
     }
 
@@ -104,12 +99,10 @@ public class Controller {
             b.setDisable(false);
         }
         currentPlayer = "O";
-        System.out.println("Board cleared");
     }
 
     @FXML
     private void handleExit() {
-        System.out.println("Exit clicked");
         System.exit(0);
     }
 
@@ -126,17 +119,13 @@ public class Controller {
     }
 
     @FXML
-    private void handlePVP(ActionEvent event) {
-        RadioMenuItem clicked = (RadioMenuItem) event.getSource();
-        System.out.println("Checked " + clicked.getText());
+    private void handlePVP() {
         setGameMode("PVP");
         clearBoard();
     }
 
     @FXML
-    private void handlePVB(ActionEvent event) {
-        RadioMenuItem clicked = (RadioMenuItem) event.getSource();
-        System.out.println("Checked " + clicked.getText());
+    private void handlePVB() {
         setGameMode("PVB");
         clearBoard();
     }
